@@ -1,6 +1,13 @@
+import adapter.Computer;
+import adapter.MemoryCard;
+import adapter.MemoryCardAdapter;
+import adapter.Usb;
 import factory.Coffee;
 import factory.CoffeeType;
 import factory.FactoryCoffee;
+import proxy.Database;
+import proxy.DatabaseProxy;
+import proxy.IDatabase;
 import singleton.Logger;
 
 public class Main {
@@ -21,5 +28,19 @@ public class Main {
         System.out.println(coffee.getName());
         Coffee coffee1 = factoryCoffee.getCoffee(CoffeeType.AMERICANO);
         System.out.println(coffee1.getName() + "\n");
+
+        /**
+         * Adapter
+         */
+        Computer computer = new Computer();
+        MemoryCardAdapter memoryCardAdapter = new MemoryCardAdapter(new MemoryCard());
+        computer.read(memoryCardAdapter);
+        System.out.println("\n");
+
+        /**
+         * Proxy
+         */
+        IDatabase database = new DatabaseProxy(new Database());
+        System.out.println(database.connect());
     }
 }
